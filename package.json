@@ -1,0 +1,27 @@
+{
+  "name": "dats",
+  "version": "1.0.0",
+  "description": "distributed asset trading system",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/nkrumahthis/dats.git"
+  },
+  "keywords": [
+    "crypto",
+    "fintech",
+    "node.js"
+  ],
+  "author": "Emmanuel Nkrumah-Sarpong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nkrumahthis/dats/issues"
+  },
+  "homepage": "https://github.com/nkrumahthis/dats#readme",
+  "dependencies": {
+    "hyperswarm": "^4.8.4"
+  }
+}
