@@ -1,16 +1,21 @@
 const Hyperswarm = require("hyperswarm");
 const crypto = require("crypto");
+const { generateNodeName } = require("./node-names")
 
 class TradingNode {
     constructor(port) {
+        console.log("setting up trading node")
         this.swarm = new Hyperswarm();
         this.peers = new Map();
+        this.nickNames = new Map();
         this.topic = crypto.createHash('sha256')
             .update('dats').digest();
         this.setupSwarm();
     }
 
     setupSwarm() {
+        console.log("setting up swarm")
+
         this.swarm.join(this.topic, {
             lookup: true,
             announce: true
@@ -21,8 +26,9 @@ class TradingNode {
 
             const peerId = decoder.decode(info.publicKey);
             this.peers.set(peerId, socket);
+            this.nickNames.set(peerId, generateNodeName()); // Generate a random nickname for each peer
 
-            console.log('New peer connected:', peerId);
+            console.log('New peer connected:', this.nickNames.get(peerId));
             
             socket.on('data', data => {
                 try {
@@ -35,7 +41,8 @@ class TradingNode {
 
             socket.on('close', () => {
                 this.peers.delete(peerId);
-                console.log('Peer disconnected:', peerId);
+                console.log('Peer disconnected:', this.nickNames.get(peerId));
+                this.nickNames.delete(peerId);
             })
 
         })
@@ -43,7 +50,7 @@ class TradingNode {
 
     async handlePeermessage(message, peerId) {
         // Handle peer messages based on the message
-        console.log('Peer received:', message, 'from', peerId);
+        console.log('Peer received:', message, 'from', this.nickNames.get(peerId));
     }
 
     broadcast(message, excludePeerIds = []) { 
