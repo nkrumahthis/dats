@@ -25,16 +25,6 @@ const data = {
     ]
 }
 
-const uniqueAdjective = {}
-for (const adj of data.names) {
-    if (!uniqueAdjective[adj]) {
-        uniqueAdjective[adj] = true
-    } else {
-        // remove duplicate adjective
-        console.log(adj, "is repeated")
-    }
-}
-
 // function to generate a unique node name using a random combination of adjectives and names
 function generateNodeName() {
     // random number from 0 to 100
@@ -45,4 +35,4 @@ function generateNodeName() {
     return `${data.adjectives[randomAdjective]} ${data.names[randomName]}`
 }
 
-console.log(generateNodeName())
+module.exports = { generateNodeName }

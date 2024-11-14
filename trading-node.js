@@ -3,7 +3,7 @@ const crypto = require("crypto");
 const { generateNodeName } = require("./node-names")
 
 class TradingNode {
-    constructor(port) {
+    constructor() {
         console.log("setting up trading node")
         this.swarm = new Hyperswarm();
         this.peers = new Map();
@@ -60,6 +60,10 @@ class TradingNode {
                 socket.write(messageStr);
             }
         });
+    }
+
+    getPeers() {
+        return Array.from(this.peers.keys()).map(peerId => this.nickNames.get(peerId));
     }
 }
 
